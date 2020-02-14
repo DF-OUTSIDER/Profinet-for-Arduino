@@ -1,6 +1,6 @@
 {
 	"name": "Profinet-for-Arduino",
-	"keywords": "Profinet","S7","Ethernet","Interface","S7-300","S7-1200","S7-1500",
+	"keywords": "Profinet, S7, Ethernet, Interface, S7-300, S7-1200, S7-1500",
 	"description": "Arduino library to interface with S7-300/S7-1200/S7-1500 CPUs over Profinet with W5500 Ethernet Module",
 	"repository":
   {
