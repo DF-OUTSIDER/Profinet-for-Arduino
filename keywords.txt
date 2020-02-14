@@ -1,0 +1,108 @@
+#######################################
+# Syntax Coloring Map For Settimino
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+S7Client	KEYWORD1
+PDU	KEYWORD1
+S7	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+BitAt	KEYWORD2
+ByteAt	KEYWORD2
+WordAt	KEYWORD2
+DWordAt	KEYWORD2
+FloatAt	KEYWORD2
+IntegerAt	KEYWORD2
+DintAt	KEYWORD2
+StringAt	KEYWORD2
+
+SetBitAt	KEYWORD2
+SetByteAt	KEYWORD2
+SetWordAt	KEYWORD2
+SetDWordAt	KEYWORD2
+SetFloatAt	KEYWORD2
+SetIntegerAt	KEYWORD2
+SetDintAt	KEYWORD2
+SetStringAt	KEYWORD2
+
+Connected	KEYWORD2
+LastError	KEYWORD2
+RecvTimeout	KEYWORD2
+SetConnectionParams	KEYWORD2
+SetConnectionType	KEYWORD2
+ConnectTo	KEYWORD2
+Connect	KEYWORD2
+Disconnect	KEYWORD2
+ReadArea	KEYWORD2
+WriteArea	KEYWORD2
+ReadBit	KEYWORD2
+WriteBit	KEYWORD2
+GetPDULength	KEYWORD2
+GetDBSize	KEYWORD2
+DBGet	KEYWORD2
+PlcStop	KEYWORD2
+PlcStart	KEYWORD2
+GetPlcStatus	KEYWORD2
+IsoExchangeBuffer	KEYWORD2
+EthernetInit	KEYWORD2
+stdout	KEYWORD2
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+S7WIFI	LITERAL1
+S7WIRED	LITERAL1
+ARDUINO_LAN	LITERAL1 
+ESP8266_FAMILY	LITERAL1
+ESP32_WIFI LITERAL1
+M5STACK_WIFI	LITERAL1
+M5STACK_LAN	LITERAL1
+
+S7AreaDB	LITERAL1
+S7AreaPE    LITERAL1
+S7AreaPA    LITERAL1
+S7AreaMK    LITERAL1
+S7AreaDB    LITERAL1
+S7AreaCT    LITERAL1
+S7AreaTM    LITERAL1
+
+PG	LITERAL1
+OP	LITERAL1
+S7_Basic	LITERAL1
+
+S7CpuStatusUnknown	LITERAL1
+S7CpuStatusRun	LITERAL1
+S7CpuStatusStop	LITERAL1
+
+word	LITERAL1
+integer	LITERAL1
+dword	LITERAL1
+dint	LITERAL1
+pbyte	LITERAL1
+pword	LITERAL1
+pdword	LITERAL1
+pinteger	LITERAL1
+pdint	LITERAL1
+pfloat	LITERAL1
+pchar	LITERAL1
+
+errTCPConnectionFailed	LITERAL1
+errTCPConnectionReset	LITERAL1
+errTCPDataRecvTout	LITERAL1
+errTCPDataSend	LITERAL1
+errTCPDataRecv	LITERAL1
+errISONegotiatingPDU	LITERAL1
+errISOInvalidPDU	LITERAL1
+errS7InvalidPDU	LITERAL1
+errS7SendingPDU	LITERAL1
+errS7DataRead	LITERAL1
+errS7DataWrite	LITERAL1
+errS7Function	LITERAL1
+errBufferTooSmall	LITERAL1
