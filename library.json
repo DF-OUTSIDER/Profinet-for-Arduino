@@ -21,7 +21,7 @@
       "email": "deatsch@outlook.de",
       "maintainer": true
     },
-  "license": "MIT"
+  "license": "MIT",
   "version": "1.0.1",
   "frameworks": "arduino",
   "platforms": "*"
