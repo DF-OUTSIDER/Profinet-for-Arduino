@@ -1,37 +1,28 @@
-## Welcome to GitHub Pages
+## Welcome to the Profinet for Ardunio Github Page
 
-You can use the [editor on GitHub](https://github.com/felix900006/Profinet-for-Arduino/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This is an open source Ethernet library for interfacing ARDUINO / ESP8266 / ESP32 natively with Siemens S7 PLCs. The CPUs 1200/1500 and S7-200 are also supported.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Main Features 
+· Full PLC memory access.
 
-### Markdown
+· PDU independence, i.e. the data that you can transfer in a single call depends only on the Arduino memory availability. 
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+· Helper functions for data conversion (Big Endian --> Little endian)
 
-```markdown
-Syntax highlighted code block
+· Three memory models for footprint optimization.
 
-# Header 1
-## Header 2
-### Header 3
+· Uses standard Arduino Ethernet library i.e. it can coexist with other clients/servers in the same sketch.
 
-- Bulleted
-- List
+· 3 ms to read a PDU into the internal buffer, 24 ms for 1024 bytes into the external.
 
-1. Numbered
-2. List
+### What do you need
 
-**Bold** and _Italic_ and `Code` text
+- An **Arduino** with an Ethernet Shield (with W5500) in which to load the examples
 
-[Link](url) and ![Image](src)
-```
+- Alternatively, a **NodeMCU board or Esp32 board**
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+- A Siemens PLC equipped with Ethernet port or Communication Processor.
 
-### Jekyll Themes
+- Or if you don't have access to one then you can use PLC Sim for testing.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/felix900006/Profinet-for-Arduino/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+For more Information click [here](https://github.com/felix900006/Profinet-for-Arduino/wiki/)
