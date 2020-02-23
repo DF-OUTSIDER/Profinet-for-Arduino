@@ -8,14 +8,13 @@
     "url": "https://github.com/felix900006/Profinet-for-Arduino.git"
   },
   "authors": 
-  [
     {
       "name": "Deatsch",
       "email": "deatsch@outlook.de",
       "maintainer": true
-    }
-  ],
-  "version": "1.0.0",
+    },
+  "license": "MIT"
+  "version": "1.0.1",
   "frameworks": "arduino",
   "platforms": "*"
 }

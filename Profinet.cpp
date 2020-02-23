@@ -1,6 +1,6 @@
 #include "Profinet.h"
 /*
-	Arduino has not a multithread environment and all Client functions are 
+	Arduino has not a multithread environment and all Client functions are
 	fully synchronous, so to save memory we can define telegrams and I/O
 	data areas as globals, since only one client at time will use them.
 */
@@ -8,7 +8,7 @@
 // ISO Connection Request telegram (contains also ISO Header and COTP Header)
 	byte ISO_CR[] = {
 		// TPKT (RFC1006 Header)
-		0x03, // RFC 1006 ID (3) 
+		0x03, // RFC 1006 ID (3)
 		0x00, // Reserved, always 0
 		0x00, // High part of packet lenght (entire frame, payload and TPDU included)
 		0x16, // Low part of packet lenght (entire frame, payload and TPDU included)
@@ -36,75 +36,75 @@
 // S7 PDU Negotiation Telegram (contains also ISO Header and COTP Header)
 	byte S7_PN[] = {
 		0x03, 0x00, 0x00, 0x19, 0x02, 0xf0, 0x80, // TPKT + COTP (see above for info)
-		0x32, 0x01, 0x00, 0x00, 0x04, 0x00, 0x00, 0x08, 0x00, 
-		0x00, 0xf0, 0x00, 0x00, 0x01, 0x00, 0x01, 
+		0x32, 0x01, 0x00, 0x00, 0x04, 0x00, 0x00, 0x08, 0x00,
+		0x00, 0xf0, 0x00, 0x00, 0x01, 0x00, 0x01,
 		0x00, 0xf0 // PDU Length Requested = HI-LO 240 bytes
 	};
 
 // S7 Read/Write Request Header (contains also ISO Header and COTP Header)
 	byte S7_RW[] = { // 31-35 bytes
-		0x03, 0x00, 
+		0x03, 0x00,
 		0x00, 0x1f, // Telegram Length (Data Size + 31 or 35)
 		0x02, 0xf0, 0x80, // COTP (see above for info)
-		0x32,       // S7 Protocol ID 
+		0x32,       // S7 Protocol ID
 		0x01,       // Job Type
 		0x00, 0x00, // Redundancy identification
 		0x05, 0x00, // PDU Reference
 		0x00, 0x0e, // Parameters Length
-		0x00, 0x00, // Data Length = Size(bytes) + 4      
-		0x04,       // Function 4 Read Var, 5 Write Var  
+		0x00, 0x00, // Data Length = Size(bytes) + 4
+		0x04,       // Function 4 Read Var, 5 Write Var
 		0x01,       // Items count
 		0x12,       // Var spec.
 		0x0a,       // Length of remaining bytes
-		0x10,       // Syntax ID 
-		S7WLByte,   // Transport Size (default, could be changed)                       
-		0x00,0x00,  // Num Elements                          
-		0x00,0x00,  // DB Number (if any, else 0)            
-		0x84,       // Area Type                            
-		0x00, 0x00, 0x00, // Area Offset                     
+		0x10,       // Syntax ID
+		S7WLByte,   // Transport Size (default, could be changed)
+		0x00,0x00,  // Num Elements
+		0x00,0x00,  // DB Number (if any, else 0)
+		0x84,       // Area Type
+		0x00, 0x00, 0x00, // Area Offset
 		// WR area
-		0x00,       // Reserved 
+		0x00,       // Reserved
 		0x04,       // Transport size
-		0x00, 0x00, // Data Length * 8 (if not timer or counter) 
+		0x00, 0x00, // Data Length * 8 (if not timer or counter)
 	};
 
 #ifdef _EXTENDED
 
 // S7 Get Block Info Request Header (contains also ISO Header and COTP Header)
 	byte S7_BI[] = {
-		0x03, 0x00, 0x00, 0x25, 0x02, 0xf0, 0x80, 0x32, 
-		0x07, 0x00, 0x00, 0x05, 0x00, 0x00, 0x08, 0x00, 
-		0x0c, 0x00, 0x01, 0x12, 0x04, 0x11, 0x43, 0x03, 
-		0x00, 0xff, 0x09, 0x00, 0x08, 0x30, 0x41, 
+		0x03, 0x00, 0x00, 0x25, 0x02, 0xf0, 0x80, 0x32,
+		0x07, 0x00, 0x00, 0x05, 0x00, 0x00, 0x08, 0x00,
+		0x0c, 0x00, 0x01, 0x12, 0x04, 0x11, 0x43, 0x03,
+		0x00, 0xff, 0x09, 0x00, 0x08, 0x30, 0x41,
 		0x30, 0x30, 0x30, 0x30, 0x30, // ASCII DB Number
-		0x41 
+		0x41
 	};
 
 // S7 Put PLC in STOP state Request Header (contains also ISO Header and COTP Header)
 	byte S7_STOP[] = {
-		0x03, 0x00, 0x00, 0x21, 0x02, 0xf0, 0x80, 0x32, 
-		0x01, 0x00, 0x00, 0x0e, 0x00, 0x00, 0x10, 0x00, 
-		0x00, 0x29, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 
-		0x50, 0x5f, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x41, 
-		0x4d 
+		0x03, 0x00, 0x00, 0x21, 0x02, 0xf0, 0x80, 0x32,
+		0x01, 0x00, 0x00, 0x0e, 0x00, 0x00, 0x10, 0x00,
+		0x00, 0x29, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09,
+		0x50, 0x5f, 0x50, 0x52, 0x4f, 0x47, 0x52, 0x41,
+		0x4d
 	};
 
 // S7 Put PLC in RUN state Request Header (contains also ISO Header and COTP Header)
 	byte S7_START[] = {
-		0x03, 0x00, 0x00, 0x25, 0x02, 0xf0, 0x80, 0x32, 
-		0x01, 0x00, 0x00, 0x0f, 0x00, 0x00, 0x14, 0x00, 
-		0x00, 0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-		0xfd, 0x00, 0x00, 0x09, 0x50, 0x5f, 0x50, 0x52, 
-		0x4f, 0x47, 0x52, 0x41, 0x4d 
+		0x03, 0x00, 0x00, 0x25, 0x02, 0xf0, 0x80, 0x32,
+		0x01, 0x00, 0x00, 0x0f, 0x00, 0x00, 0x14, 0x00,
+		0x00, 0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0xfd, 0x00, 0x00, 0x09, 0x50, 0x5f, 0x50, 0x52,
+		0x4f, 0x47, 0x52, 0x41, 0x4d
 	};
 
 // S7 Get PLC Status Request Header (contains also ISO Header and COTP Header)
 	byte S7_PLCGETS[] = {
-		0x03, 0x00, 0x00, 0x21, 0x02, 0xf0, 0x80, 0x32, 
-		0x07, 0x00, 0x00, 0x2c, 0x00, 0x00, 0x08, 0x00, 
-		0x08, 0x00, 0x01, 0x12, 0x04, 0x11, 0x44, 0x01, 
-		0x00, 0xff, 0x09, 0x00, 0x04, 0x04, 0x24, 0x00, 
-		0x00 
+		0x03, 0x00, 0x00, 0x21, 0x02, 0xf0, 0x80, 0x32,
+		0x07, 0x00, 0x00, 0x2c, 0x00, 0x00, 0x08, 0x00,
+		0x08, 0x00, 0x01, 0x12, 0x04, 0x11, 0x44, 0x01,
+		0x00, 0xff, 0x09, 0x00, 0x04, 0x04, 0x24, 0x00,
+		0x00
 	};
 
 #endif // _EXTENDED
@@ -119,7 +119,7 @@ bool S7Helper::BitAt(void *Buffer, int ByteIndex, byte BitIndex)
 {
 	byte mask[] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
 	pbyte Pointer = pbyte(Buffer) + ByteIndex;
-	
+
 	if (BitIndex>7)
 		return false;
 	else
@@ -286,11 +286,11 @@ void S7Helper::SetDWordAt(int index, word value)
 void S7Helper::SetFloatAt(void *Buffer, int index, float value)
 {
   pdword dvalue = pdword(&value);
-  
+
   *(pbyte(Buffer)+index)  =byte((*dvalue >> 24) & 0xFF);
   *(pbyte(Buffer)+index+1)=byte((*dvalue >> 16) & 0xFF);
   *(pbyte(Buffer)+index+2)=byte((*dvalue >> 8) & 0xFF);
-  *(pbyte(Buffer)+index+3)=byte(*dvalue & 0x00FF);	
+  *(pbyte(Buffer)+index+3)=byte(*dvalue & 0x00FF);
 }
 //-----------------------------------------------------------------------------
 void S7Helper::SetFloatAt(int index, float value)
@@ -321,18 +321,18 @@ void S7Helper::SetStringAt(int index, char *value)
 #endif // _S7HELPER
 
 //-----------------------------------------------------------------------------
-// Ethernet initialization 
+// Ethernet initialization
 //-----------------------------------------------------------------------------
 void EthernetInit(uint8_t *mac, IPAddress ip)
 {
 #ifdef S7WIRED
-  #ifdef M5STACK_LAN    
+  #ifdef M5STACK_LAN
       SPI.begin(18, 19, 23, -1);
       Ethernet.init(26);
-  #endif  
+  #endif
       // Start Ethernet
-      Ethernet.begin(mac, ip); 
-#endif    
+      Ethernet.begin(mac, ip);
+#endif
 }
 //-----------------------------------------------------------------------------
 S7Client::S7Client()
@@ -347,13 +347,13 @@ S7Client::S7Client()
 	LastError = 0;
 	PDULength = 0;
 	RecvTimeout = 500; // 500 ms
-	
-#ifdef S7WIFI	
+
+#ifdef S7WIFI
     TCPClient = new(WiFiClient);
-#endif    
-#ifdef S7WIRED 
+#endif
+#ifdef S7WIRED
     TCPClient = new(EthernetClient);
-#endif    
+#endif
 }
 //-----------------------------------------------------------------------------
 S7Client::~S7Client()
@@ -388,7 +388,7 @@ int S7Client::WaitForData(uint16_t Size, uint16_t Timeout)
 		if (millis()<Elapsed)
 			Elapsed=millis(); // Resets the counter, in the worst case we will wait some additional millisecs.
 
-	}while(millis()-Elapsed<Timeout);	
+	}while(millis()-Elapsed<Timeout);
 
 	// Here we are in timeout zone, if there's something into the buffer, it must be discarded.
 	if (BytesReady>0)
@@ -451,7 +451,7 @@ int S7Client::Connect()
 			{
 				LastError=NegotiatePduLength(); // Third stage : S7 PDU negotiation
 			}
-		}	
+		}
 	}
 	Connected=LastError==0;
 	return LastError;
@@ -465,7 +465,7 @@ void S7Client::Disconnect()
 		Connected = false;
 		PDULength = 0;
 		LastError = 0;
-	}	
+	}
 }
 //-----------------------------------------------------------------------------
 int S7Client::TCPConnect()
@@ -485,7 +485,7 @@ int S7Client::RecvISOPacket(uint16_t *Size)
 	while ((LastError==0) && !Done)
 	{
 		// Get TPKT (4 bytes)
-		RecvPacket(PDU.H, 4); 
+		RecvPacket(PDU.H, 4);
 		if (LastError==0)
 		{
 			*Size = IsoPduSize();
@@ -504,7 +504,7 @@ int S7Client::RecvISOPacket(uint16_t *Size)
 	if (LastError==0)
 	{
 		RecvPacket(PDU.H, 3); // Skip remaining 3 COTP bytes
-		LastPDUType=PDU.H[1]; // Stores PDU Type, we need it 
+		LastPDUType=PDU.H[1]; // Stores PDU Type, we need it
 		*Size-=ISOSize;
 		// We need to align with PDU.DATA
 		RecvPacket(Target, *Size);
@@ -547,7 +547,7 @@ int S7Client::NegotiatePduLength()
 	if (TCPClient->write(&S7_PN[0], sizeof(S7_PN))==sizeof(S7_PN))
 	{
 		RecvISOPacket(&Length);
-		if (LastError==0)                 
+		if (LastError==0)
 		{
 			// check S7 Error
 			if ((Length==20) && (PDU.H[27]==0) && (PDU.H[28]==0))  // 20 = size of Negotiate Answer
@@ -559,7 +559,7 @@ int S7Client::NegotiatePduLength()
 				else
 					return SetLastError(errISONegotiatingPDU);
 			}
-			else 
+			else
 				return SetLastError(errISONegotiatingPDU);
 		}
 		else
@@ -584,7 +584,7 @@ int S7Client::ReadArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amo
 	int WordSize = 1;
 
 	LastError=0;
-	
+
 	// If we are addressing Timers or counters the element size is 2
 	if ((Area==S7AreaCT) || (Area==S7AreaTM))
 		WordSize = 2;
@@ -600,23 +600,23 @@ int S7Client::ReadArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amo
 		if (TotElements>MaxElements)
 			TotElements=MaxElements;
 	}
-	
+
     while ((TotElements>0) && (LastError==0))
     {
         NumElements=TotElements;
         if (NumElements>MaxElements)
            NumElements=MaxElements;
-		
+
 		SizeRequested =NumElements * WordSize;
 
 		Target=pbyte(ptrData)+Offset;
 
 		// Setup the telegram
-		memcpy(&PDU.H, S7_RW, Size_RD); 
+		memcpy(&PDU.H, S7_RW, Size_RD);
 
 		// Set DB Number
 		PDU.H[27] = Area;
-		if (Area==S7AreaDB) 
+		if (Area==S7AreaDB)
 		{
 			PDU.H[25] = DBNumber>>8;
 			PDU.H[26] = DBNumber & 0x00FF;
@@ -671,7 +671,7 @@ int S7Client::ReadArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amo
 		}
 		else
 			LastError = errTCPDataSend;
-		
+
 		TotElements -= NumElements;
         LongStart += NumElements*WordSize;
 	}
@@ -704,7 +704,7 @@ int S7Client::WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Am
 	int WordSize = 1;
 
 	LastError=0;
-	
+
 	// If we are addressing Timers or counters the element size is 2
 	if ((Area==S7AreaCT) || (Area==S7AreaTM))
 		WordSize = 2;
@@ -719,7 +719,7 @@ int S7Client::WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Am
 		if (TotElements>MaxElements)
 			TotElements=MaxElements;
 	}
-	
+
     while ((TotElements>0) && (LastError==0))
     {
         NumElements=TotElements;
@@ -730,7 +730,7 @@ int S7Client::WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Am
 		IsoSize=Size_WR+DataSize;
 
 		// Setup the telegram
-		memcpy(&PDU.H, S7_RW, Size_WR); 
+		memcpy(&PDU.H, S7_RW, Size_WR);
 		// Whole telegram Size
 		PDU.H[2]=IsoSize>>8;
 		PDU.H[3]=IsoSize & 0x00FF;
@@ -742,7 +742,7 @@ int S7Client::WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Am
 		PDU.H[17]=0x05;
 		// Set DB Number
 		PDU.H[27] = Area;
-		if (Area==S7AreaDB) 
+		if (Area==S7AreaDB)
 		{
 			PDU.H[25] = DBNumber>>8;
 			PDU.H[26] = DBNumber & 0x00FF;
@@ -775,7 +775,7 @@ int S7Client::WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Am
 		PDU.H[29] = Address & 0x000000FF;
         Address = Address >> 8;
         PDU.H[28] = Address & 0x000000FF;
-		
+
 		// Transport Size
 		switch (WordLen)
 		{
@@ -790,7 +790,7 @@ int S7Client::WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Am
 				PDU.H[32] = TS_ResByte; // byte/word/dword etc.
 				break;
 		};
-		
+
 		// Length
 		PDU.H[33]=Length>>8;
 		PDU.H[34]=Length & 0x00FF;
@@ -880,7 +880,7 @@ int S7Client::GetDBSize(uint16_t DBNumber, uint16_t *Size)
 	}
 	else
 		LastError = errTCPDataSend;
-	
+
 	return LastError;
 }
 //-----------------------------------------------------------------------------
@@ -892,7 +892,7 @@ int S7Client::DBGet(uint16_t DBNumber, void *ptrData, uint16_t *Size)
 	Result=GetDBSize(DBNumber, &Length);
 	if (Result==0)
 	{
-		if (Length<=*Size) // Check if the buffer supplied is big enough 
+		if (Length<=*Size) // Check if the buffer supplied is big enough
 		{
 			Result=ReadArea(S7AreaDB, DBNumber, 0, Length, ptrData);
 			if (Result==0)
@@ -910,7 +910,7 @@ int S7Client::PlcStop()
 	uint16_t Length;
 	LastError=0;
 	// Setup the telegram
-	memcpy(&PDU.H, S7_STOP, sizeof(S7_STOP)); 
+	memcpy(&PDU.H, S7_STOP, sizeof(S7_STOP));
 	if (TCPClient->write(&PDU.H[0], sizeof(S7_STOP))==sizeof(S7_STOP))
 	{
 		RecvISOPacket(&Length);
@@ -927,7 +927,7 @@ int S7Client::PlcStop()
 	}
 	else
 		LastError = errTCPDataSend;
-	
+
 	return LastError;
 }
 //-----------------------------------------------------------------------------
@@ -936,7 +936,7 @@ int S7Client::PlcStart()
 	uint16_t Length;
 	LastError=0;
 	// Setup the telegram
-	memcpy(&PDU.H, S7_START, sizeof(S7_START)); 
+	memcpy(&PDU.H, S7_START, sizeof(S7_START));
 	if (TCPClient->write(&PDU.H[0], sizeof(S7_START))==sizeof(S7_START))
 	{
 		RecvISOPacket(&Length);
@@ -953,7 +953,7 @@ int S7Client::PlcStart()
 	}
 	else
 		LastError = errTCPDataSend;
-	
+
 	return LastError;
 }
 //-----------------------------------------------------------------------------
@@ -962,7 +962,7 @@ int S7Client::GetPlcStatus(int *Status)
 	uint16_t Length;
 	LastError=0;
 	// Setup the telegram
-	memcpy(&PDU.H, S7_PLCGETS, sizeof(S7_PLCGETS)); 
+	memcpy(&PDU.H, S7_PLCGETS, sizeof(S7_PLCGETS));
 	if (TCPClient->write(&PDU.H[0], sizeof(S7_PLCGETS))==sizeof(S7_PLCGETS))
 	{
 		RecvISOPacket(&Length);
@@ -988,7 +988,7 @@ int S7Client::GetPlcStatus(int *Status)
 	}
 	else
 		LastError = errTCPDataSend;
-	
+
 	return LastError;
 }
 //-----------------------------------------------------------------------------
@@ -1000,7 +1000,7 @@ int S7Client::IsoExchangeBuffer(uint16_t *Size)
 		RecvISOPacket(Size);
 	else
 		LastError = errTCPDataSend;
-	
+
 	return LastError;
 }
 //-----------------------------------------------------------------------------

@@ -14,7 +14,7 @@
 #endif
 
 #pragma pack(1)
-// Error Codes 
+// Error Codes
 // from 0x0001 up to 0x00FF are severe errors, the Client should be disconnected
 // from 0x0100 are S7 Errors such as DB not found or address beyond the limit etc..
 // For Arduino Due the error code is a 32 bit integer but this doesn't change the constants use.
@@ -141,7 +141,7 @@ public:
 	char * StringAt(void *Buffer, int index);
 	char * StringAt(int index);
 	void SetStringAt(void *Buffer, int index, char *value);
-	void SetStringAt(int index, char *value);	
+	void SetStringAt(int index, char *value);
 };
 extern S7Helper S7;
 
@@ -152,25 +152,25 @@ extern S7Helper S7;
 //-----------------------------------------------------------------------------
 void EthernetInit(uint8_t *mac, IPAddress ip);
 //-----------------------------------------------------------------------------
-// S7 Client                                       
+// S7 Client
 //-----------------------------------------------------------------------------
-class S7Client 
+class S7Client
 {
 private:
-	uint8_t LocalTSAP_HI; 
+	uint8_t LocalTSAP_HI;
 	uint8_t LocalTSAP_LO;
 	uint8_t RemoteTSAP_HI;
 	uint8_t RemoteTSAP_LO;
 	uint8_t LastPDUType;
 	uint16_t ConnType;
-	
+
 	IPAddress Peer;
-	
-	// Since we can use either an EthernetClient or a WifiClient 
+
+	// Since we can use either an EthernetClient or a WifiClient
 	// we have to create the class as an ancestor and then resolve
 	// the inherited into S7Client creator.
 	Client *TCPClient;
-	
+
 	int PDULength;    // PDU Length negotiated
 	int IsoPduSize();
 	int WaitForData(uint16_t Size, uint16_t Timeout);
@@ -197,14 +197,14 @@ public:
 	int ConnectTo(IPAddress Address, uint16_t Rack, uint16_t Slot);
 	int Connect();
 	void Disconnect();
-	int ReadArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amount, void *ptrData); 
-	int ReadArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amount, int WordLen, void *ptrData); 
-	int ReadBit(int Area, uint16_t DBNumber, uint16_t BitStart, bool &Bit); 
-	int WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amount, void *ptrData); 
-	int WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amount, int WordLen, void *ptrData); 
-	int WriteBit(int Area, uint16_t DBNumber, uint16_t BitIndex, bool Bit); 
-	int WriteBit(int Area, uint16_t DBNumber, uint16_t ByteIndex, uint16_t BitInByte, bool Bit); 
-	
+	int ReadArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amount, void *ptrData);
+	int ReadArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amount, int WordLen, void *ptrData);
+	int ReadBit(int Area, uint16_t DBNumber, uint16_t BitStart, bool &Bit);
+	int WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amount, void *ptrData);
+	int WriteArea(int Area, uint16_t DBNumber, uint16_t Start, uint16_t Amount, int WordLen, void *ptrData);
+	int WriteBit(int Area, uint16_t DBNumber, uint16_t BitIndex, bool Bit);
+	int WriteBit(int Area, uint16_t DBNumber, uint16_t ByteIndex, uint16_t BitInByte, bool Bit);
+
 	int GetPDULength(){ return PDULength; }
 	// Extended functions
 #ifdef _EXTENDED
